@@ -6,7 +6,7 @@ import worddb
 import imp
 import sys
 	
-client = IrcClient.IrcClient("irc.mibbit.net", 6667, "Dragonflame", "DragonBot@invalid", False, True)
+client = IrcClient.IrcClient("irc.mibbit.net", 6667, "Dragonflame", "DragonBot@invalid", True, True)
 client.JoinChannel("#exploders")
 client.SendMessage("#exploders", "*yawns* hello people")
 client.AddIgnore("Moberry")
@@ -63,7 +63,8 @@ while True:
 		ReloadModule(arg)
 	elif cmd=="load":
 		LoadModule(arg)
-			
+	elif cmd=="identify":
+		client.Identify(arg)
 	elif cmd=="exit" or cmd=="kill" or cmd=="quit":
 		exit()
 	else:

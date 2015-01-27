@@ -111,3 +111,7 @@ class IrcClient:
 			return True
 		else:
 			return False
+	
+	def Identify(self, password):
+		self.SendMessage("nickserv", "identify "+password)
+		

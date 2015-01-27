@@ -1,3 +1,4 @@
+# coding=utf-8
 import socket
 import thread 
 import time
@@ -18,6 +19,7 @@ class IrcClient:
 		self.EventHandlers = []
 		
 		self.ignoredNicks = []
+		self.channels = []
 		
 		self.sock.connect((host,port))
 		
@@ -85,8 +87,12 @@ class IrcClient:
 		self.EventHandlers.append(func)
 	
 	def RemoveEventHandler(self, func):
-		self.EventHandlers.remove(func)
-	
+		try:
+			self.EventHandlers.remove(func)
+		except:
+			print("WARNING: tried to remove unknown handler!")
+			pass
+		
 	def Send(self, cmd):
 		self.SendQueue.put(cmd+'\n')
 	
@@ -97,14 +103,35 @@ class IrcClient:
 	def SendMessage(self, destination, message):
 		self.Send("PRIVMSG "+destination+" :"+message)
 	
+	def BroadcastMessage(self, message):
+		for channel in self.channels:
+			self.SendMessage(channel, message)
+	
+	def SetNick(self, nickname):
+		self.Send("NICK "+nickname)
+	
+	
 	def JoinChannel(self, channelname, channelpassword=""):
 		self.Send("JOIN "+channelname+" "+channelpassword)
-		
+		self.channels.append(channelname)
+	
+	def LeaveChannel(self, channelname):
+		self.Send("PART "+channelname)
+		try:
+			self.channels.remove(channelname)
+		except:
+			print("WARNING: Tried to leave channel "+channelname+", but you arent in that channel!")
+			pass
+			
 	def AddIgnore(self, name):
 		self.ignoredNicks.append(name)
 	
 	def RemoveIgnore(self, name):
-		self.ignoredNicks.remove(name)
+		try:
+			self.ignoredNicks.remove(name)
+		except:
+			print("WARNING: You didnt ignore "+name+" in the first place!")
+			pass
 	
 	def IsIgnored(self, name):
 		if name in self.ignoredNicks:

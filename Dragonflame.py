@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+﻿#!/usr/bin/python3
+# coding=utf-8
 import random
 import re
 import IrcClient
@@ -6,9 +7,8 @@ import worddb
 import imp
 import sys
 	
-client = IrcClient.IrcClient("irc.mibbit.net", 6667, "Dragonflame", "DragonBot@invalid", True, True)
-client.JoinChannel("#exploders")
-client.SendMessage("#exploders", "*yawns* hello people")
+client = IrcClient.IrcClient("irc.mibbit.net", 6667, "Dragonflame", "DragonBot@invalid", False, True)
+
 client.AddIgnore("Moberry")
 client.AddIgnore("Droplet")
 client.AddIgnore("Mesril")
@@ -50,12 +50,16 @@ LoadModule("HelloHandler")
 LoadModule("PokeHandler")
 LoadModule("TalkAboutYourselfHandler")
 
+client.JoinChannel("#exploders")
+client.SendMessage("#exploders", "*yawns* hello people")
+
+e = re.compile(ur'(\w*)\s*([\w@.#,:()"\'$%&\/\[\] -]*)')
+
 while True:
 	cmd = ""
 	arg = ""
 	inCmd = raw_input("CMD?: ")
-	e = re.compile(ur'(\w*)\s*(\w*)')
-	match = re.search(e, inCmd)
+	match = e.search(inCmd)
 	cmd=match.group(1)
 	arg = match.group(2)
 	
@@ -63,10 +67,25 @@ while True:
 		ReloadModule(arg)
 	elif cmd=="load":
 		LoadModule(arg)
+	elif cmd=="nick":
+		client.SetNick(arg)
 	elif cmd=="identify":
 		client.Identify(arg)
 	elif cmd=="exit" or cmd=="kill" or cmd=="quit":
 		exit()
+	elif cmd=="say":
+		try:
+			channel, sendArg = arg.split(' ', 1)
+			client.SendMessage(channel, sendArg)
+		except:
+			print("WARNING: invalid syntax for say! say <channel> <message>")
+			pass
+	elif cmd=="broadcast":
+		client.BroadcastMessage(arg)
+	elif cmd=="join":
+		client.JoinChannel(arg)
+	elif cmd=="leave":
+		client.LeaveChannel(arg)
 	else:
 		print("unknown command")
 	pass;

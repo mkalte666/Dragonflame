@@ -53,7 +53,7 @@ LoadModule("TalkAboutYourselfHandler")
 client.JoinChannel("#exploders")
 client.SendMessage("#exploders", "*yawns* hello people")
 
-e = re.compile(ur'(\w*)\s*([\w@.#,:()"\'$%&\/\[\] -]*)')
+e = re.compile(ur'(\w*)\s*([\w@.#,:()"\'$%&\/\[\]!* -]*)')
 
 while True:
 	cmd = ""

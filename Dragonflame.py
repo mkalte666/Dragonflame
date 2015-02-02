@@ -33,10 +33,10 @@ def LoadModule(name):
 		client.RegisterEventHandler(moduleToLoad.HandlerFunc)
 	except:
 		pass
-		
-	fp, pathname, description = imp.find_module(name)
 	
 	try:
+		fp, pathname, description = imp.find_module(name)
+	
 		moduleToLoad = imp.load_module(name, fp, pathname, description)
 		client.RegisterEventHandler(moduleToLoad.HandlerFunc)
 	except: 

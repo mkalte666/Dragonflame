@@ -23,7 +23,7 @@ class IrcClient:
 		
 		self.sock.connect((host,port))
 		
-		thread.start_new_thread(self.ReciveWorker, ())
+		thread.start_new_thread(self.RecieveWorker, ())
 		thread.start_new_thread(self.SendWorker, ())
 		thread.start_new_thread(self.EventWorker, ())
 		
@@ -33,7 +33,7 @@ class IrcClient:
 		self.Send("USER "+self.nick+" 0 * :"+self.realname)
 		self.Send("NICK "+self.nick)
 		self.WaitForSilence()
-	def ReciveWorker(self): 
+	def RecieveWorker(self): 
 		recvbuffer = ""
 		c = ""
 		while True:

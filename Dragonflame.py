@@ -6,6 +6,7 @@ import IrcClient
 import worddb
 import imp
 import sys
+import os.path
 	
 client = IrcClient.IrcClient("irc.mibbit.net", 6667, "Dragonflame", "DragonBot@invalid", False, True)
 
@@ -57,6 +58,10 @@ client.JoinChannel("#exploders")
 client.SendMessage("#exploders", "*yawns* hello people")
 
 e = re.compile(ur'(\w*)\s*([\w@.#,:()"\'$%&\/\[\]!* -]*)')
+
+if os.path.isfile('.key'):
+    with open('.key', 'r') as keyfile:
+        client.Identify(keyfile.read())
 
 while True:
 	cmd = ""

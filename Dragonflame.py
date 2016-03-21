@@ -49,6 +49,9 @@ def LoadModule(name):
 LoadModule("HelloHandler")
 LoadModule("PokeHandler")
 LoadModule("TalkAboutYourselfHandler")
+LoadModule("SpellHandler")
+LoadModule("HugHandler")
+LoadModule("LiteratureHandler")
 
 client.JoinChannel("#exploders")
 client.SendMessage("#exploders", "*yawns* hello people")

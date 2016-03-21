@@ -52,7 +52,7 @@ LoadModule("PokeHandler")
 LoadModule("TalkAboutYourselfHandler")
 LoadModule("SpellHandler")
 LoadModule("HugHandler")
-LoadModule("LiteratureHandler")
+LoadModule("DramaHandler")
 
 client.JoinChannel("#exploders")
 client.SendMessage("#exploders", "*yawns* hello people")

@@ -8,10 +8,10 @@ import sys
 import textChain
 
 dramaFile = open("drama.txt", 'r')
-chain = parseToChain(dramaFile.read())
+chain = textChain.parseToChain(dramaFile.read())
 
 def HandlerFunc(client, event, prefix, command, params, trailing):
 	if params != client.nick:
 		if command == "PRIVMSG":
 			e = re.compile('\s*!drama[\w\s]*')
-                client.SendMessage(params, generateTextFromChain(chain,"",20)
+                client.SendMessage(params, textChain.generateTextFromChain(chain,"",20))

@@ -44,3 +44,4 @@ Temporary Items
 
 #python compiled foo
 *.pyc
+.key
